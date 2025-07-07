@@ -65,7 +65,7 @@ Add `historybuffer` to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-historybuffer = "0.0.1"
+historybuffer = "0.1.0"
 ```
 
 Then, include it in your Rust project:
