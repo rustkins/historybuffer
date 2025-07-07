@@ -1,0 +1,13 @@
+[package]
+name = "historybuffer"
+authors = ["rustkin"]
+description = "efficient byte history cache with indexing"
+documentation = "https://docs.rs/historybuffer"
+keywords = ["buffer", "buffered"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/rustkins/historybuffer"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]

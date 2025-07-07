@@ -11,9 +11,7 @@ Data is copied upon ingestion and again when requested. New data automatically o
 
 **Note**: For more efficient processing, the buffer size is always increased to the next power of 2. A buffer size of 8 remains 8, 9 becomes 16, 129 becomes 256.
 
-**Note**: This software has not tested usize wrap arounds that could exist.
-
-**Note**: The software has not been tested for cases where the `usize` index wraps.
+**Note**: This software has not tested usize wrap around indexing where the index value wraps.
 
 ## Example Usage
 
