@@ -48,13 +48,14 @@
 //! get_vec_and_index returns a tuple containing the data and the start index of
 //! the returned data.
 //!
-//! Note: This code has not been tested for wrapping `usize` values from long running apps.
+//! Note: This code has not been tested for wrapping `usize` values > 4 billion chars 
+//!       from long running apps.
 
 
 //
 // A tale of two indices
 //
-// Data is stored in blocks whose length is always a power of 2 (2, 4, 8, ...)
+// Data is stored in a block whose length is always a power of 2 (2, 4, 8, ...)
 // Data is aligned according to the equation:
 //
 // buf_index = (start_index & mask)
@@ -134,14 +135,14 @@ impl HistoryBuffer {
 
     /// get_index
     ///
-    /// Gets the current index.
+    /// Gets the history's starting index, or oldest byte
     pub fn get_index(&self) -> usize {
         self.next_running - self.len
     }
 
     /// get_last_index
     ///
-    /// Gets the last valid index in the buffer.
+    /// Gets the index of the most recent addtion.
     pub fn get_last_index(&self) -> usize {
         self.next_running.saturating_sub(1).max(self.next_running.saturating_sub(self.len))
     }
@@ -246,11 +247,6 @@ impl HistoryBuffer {
             return (v, 0);
         }
 
-        println!(
-            "self.buf.len: {}, next_run: {}, num: {}, inndx: {}, endidx: {}",
-            self.len, self.next_running, num, inndx, outdx
-        );
-
         if outdx > inndx {
             v[0..num].copy_from_slice(&self.buf[inndx..outdx]);
         } else {
@@ -271,11 +267,6 @@ impl HistoryBuffer {
             None
         }
     }
-
-    //fn print_buffer(&self) {
-    // Utility function to print the current state of the buffer
-    //println!("Buffer: {:?}", self.buf);
-    //}
 }
 
 fn next_power_of_two(n: usize) -> usize {
@@ -447,7 +438,7 @@ mod tests {
             v2,
             v3,
             v4,
-        ) in test_vectors
+        ) in test_vectorsget
         {
             println!("\n\n\t\t\t{}:  Adding: {:#?}", test_name, input);
             tbuf.add(input);
